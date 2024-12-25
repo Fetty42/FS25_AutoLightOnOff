@@ -6,7 +6,7 @@
 AutoLightOnOff = {}
 
 AutoLightOnOff.updateDelta = 0    			-- time since the last update
-AutoLightOnOff.updateRate = 200  			-- milliseconds until next update
+AutoLightOnOff.updateRate = 1000  			-- milliseconds until next update
 AutoLightOnOff.lastAutomaticAction = ""     -- Values: "on", "off", ""
 AutoLightOnOff.lastVehicleOrPlayer = nil
 
