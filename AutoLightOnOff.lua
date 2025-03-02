@@ -1,21 +1,129 @@
 -- Author: Fetty42
--- Date: 14.12.2024
+-- Date: 02.03.2025
 -- Version: 1.0.0.0
+
+local dbPrintfOn = false
+local dbInfoPrintfOn = false
+
+local function dbInfoPrintf(...)
+	if dbInfoPrintfOn then
+    	print(string.format(...))
+	end
+end
+
+local function dbPrintf(...)
+	if dbPrintfOn then
+    	print(string.format(...))
+	end
+end
+
+local function dbPrint(...)
+	if dbPrintfOn then
+    	print(...)
+	end
+end
+
+local function dbPrintHeader(funcName)
+	if dbPrintfOn then
+		if g_currentMission ~=nil and g_currentMission.missionDynamicInfo ~=nil then
+			print(string.format("Call %s: isDedicatedServer=%s | isServer()=%s | isMasterUser=%s | isMultiplayer=%s | isClient()=%s | farmId=%s", 
+							funcName, tostring(g_dedicatedServer~=nil), tostring(g_currentMission:getIsServer()), tostring(g_currentMission.isMasterUser), tostring(g_currentMission.missionDynamicInfo.isMultiplayer), tostring(g_currentMission:getIsClient()), tostring(g_currentMission:getFarmId())))
+		else
+			print(string.format("Call %s: isDedicatedServer=%s | g_currentMission=%s",
+							funcName, tostring(g_dedicatedServer~=nil), tostring(g_currentMission)))
+		end
+	end
+end
 
 
 AutoLightOnOff = {}
+
+AutoLightOnOff.settings = {}
+AutoLightOnOff.name = g_currentModName or "FS25_AutoLightOnOff"
 
 AutoLightOnOff.updateDelta = 0    			-- time since the last update
 AutoLightOnOff.updateRate = 1000  			-- milliseconds until next update
 AutoLightOnOff.lastAutomaticAction = ""     -- Values: "on", "off", ""
 AutoLightOnOff.lastVehicleOrPlayer = nil
+AutoLightOnOff.init = false
+
+
+
+function AutoLightOnOff:loadMap()
+	dbPrintHeader("AutoLightOnOff:loadMap")
+	
+	InGameMenu.onMenuOpened = Utils.appendedFunction(InGameMenu.onMenuOpened, AutoLightOnOff.initSettingUI)
+	FSBaseMission.saveSavegame = Utils.appendedFunction(FSBaseMission.saveSavegame, AutoLightOnOff.saveSettings)
+
+	AutoLightOnOff:loadSettings()
+end
+
+function AutoLightOnOff:defaultSettings()
+	dbPrintHeader("AutoLightOnOff:defSettings")
+	AutoLightOnOff.settings.isPlayerAutoLight = true
+end
+
+function AutoLightOnOff:saveSettings()
+	dbPrintHeader("AutoLightOnOff:saveSettings")
+
+	local modSettingsDir = getUserProfileAppPath() .. "modSettings"
+	local fileName = "AutoLightOnOff.xml"
+	local createXmlFile = modSettingsDir .. "/" .. fileName
+
+	local xmlFile = createXMLFile("AutoLightOnOff", createXmlFile, "AutoLightOnOff")
+	setXMLBool(xmlFile, "AutoLightOnOff.settings#isPlayerAutoLight",AutoLightOnOff.settings.isPlayerAutoLight)
+	
+	saveXMLFile(xmlFile)
+	delete(xmlFile)
+end
+
+function AutoLightOnOff:loadSettings()
+	dbPrintHeader("AutoLightOnOff:loadSettings")
+	
+	local modSettingsDir = getUserProfileAppPath() .. "modSettings"
+	local fileName = "AutoLightOnOff.xml"
+	local fileNamePath = modSettingsDir .. "/" .. fileName
+	
+	if fileExists(fileNamePath) then
+		local xmlFile = loadXMLFile("AutoLightOnOff", fileNamePath)
+		
+		if xmlFile == 0 then
+			dbPrintf("  Could not read the data from XML file (%s), maybe the XML file is empty or corrupted, using the default!", fileNamePath)
+			AutoLightOnOff:defaultSettings()
+			return
+		end
+
+		local isPlayerAutoLight = getXMLBool(xmlFile, "AutoLightOnOff.settings#isPlayerAutoLight")
+
+		if isPlayerAutoLight == nil or isPlayerAutoLight == 0 then
+			dbPrintf("  Could not parse the correct 'isPlayerAutoLight' value from the XML file, maybe it is corrupted, using the default!")
+			isPlayerAutoLight = true
+		end
+		
+		AutoLightOnOff.settings.isPlayerAutoLight = isPlayerAutoLight
+		
+		delete(xmlFile)
+	else
+		AutoLightOnOff:defaultSettings()
+		dbPrintf("  NOT any File founded!, using the default settings.")
+	end
+end
+
+function AutoLightOnOff:initSettingUI()
+	if not AutoLightOnOff.init then
+		local uiSettingsAutoLight = AutoLightOnOffUISettings.new(AutoLightOnOff.settings,true)
+		uiSettingsAutoLight:registerSettings()
+		AutoLightOnOff.init = true
+	end
+end
 
 
 function AutoLightOnOff:update(dt)
+	-- dbPrintHeader("AutoLightOnOff:update")
 	AutoLightOnOff.updateDelta = AutoLightOnOff.updateDelta + dt
 
 	if AutoLightOnOff.updateDelta > AutoLightOnOff.updateRate then
-		-- print("AutoLightOnOff:update")
+		dbPrintHeader("AutoLightOnOff:update")
 		AutoLightOnOff.updateDelta = 0
 		if g_currentMission:getIsClient() and g_gui.currentGui == nil then
     		local needLights = not g_currentMission.environment.isSunOn
@@ -42,7 +150,7 @@ function AutoLightOnOff:update(dt)
 					end
 				end
                 AutoLightOnOff.lastVehicleOrPlayer = curVehicle
-			elseif g_localPlayer ~= nil then
+			elseif g_localPlayer ~= nil and AutoLightOnOff.settings.isPlayerAutoLight then
                 AutoLightOnOff.lastAutomaticAction = AutoLightOnOff.lastVehicleOrPlayer == g_localPlayer and AutoLightOnOff.lastAutomaticAction or ""
 
 				if not g_localPlayer.isFlashlightActive and needLights and AutoLightOnOff.lastAutomaticAction ~= "on" then
@@ -62,6 +170,7 @@ function AutoLightOnOff:update(dt)
 end
 
 function AutoLightOnOff:getIsLightTurnedOn(vehObj)
+	dbPrintHeader("AutoLightOnOff:getIsLightTurnedOn")
 	if vehObj.spec_lights ~= nil and vehObj.spec_lights.currentLightState > 0 then
 		return true
 	else

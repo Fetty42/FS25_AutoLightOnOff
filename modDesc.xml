@@ -1,4 +1,4 @@
-<modDesc descVersion="94">
+<modDesc descVersion="96">
 	<author>Fetty42</author>
 	<version>1.0.0.0</version>
 	<title>
@@ -7,22 +7,48 @@
     <description>
 		<de><![CDATA[Schaltet automatisch das Licht das aktuellen Fahrzeugs oder des Spielers an oder aus, abhängig davon, ob Nacht oder Tag ist. Funktioniert sowohl beim Einsteigen als auch während der Fahrt.
 Wird die automatische Aktion manuell übersteuert, wird der Automatismus so lange deaktiviert, bis das Fahrzeug/Spieler gewechselt wird oder der Sonnenaufgang/Sonnenuntergang erreicht wird.
+Für den Spieler kann der Automatismuss in den generellen Spieleinstellungen deaktiviert werden.
 
 Für Fehlermeldungen oder Anregungen besucht bitte: https://github.com/Fetty42/FS25_AutoLightOnOff/issues oder https://forum.giants-software.com/viewtopic.php?t=208708]]></de>
 
 		<en><![CDATA[Automatically switches the light of the current vehicle or player on or off, depending on whether it is night or day. Works both when entering the vehicle and while driving.
 If the automatic action is manually overridden, the automatism is deactivated until the vehicle/player is changed or sunrise/sunset is reached.
+For the player, the automatism can be deactivated in the general game settings.
 
 For error messages or suggestions please visit: https://github.com/Fetty42/FS25_AutoLightOnOff/issues or https://forum.giants-software.com/viewtopic.php?t=208708]]></en>
 
 		<fr><![CDATA[Allume ou éteint automatiquement les lumières du véhicule actuel ou du joueur, selon qu'il fait nuit ou jour. Fonctionne aussi bien en montant dans le véhicule que pendant le trajet.
 Si l'action automatique est remplacée manuellement, l'automatisme est désactivé jusqu'à ce que le véhicule/joueur soit changé ou que le lever/coucher du soleil soit atteint.
+Pour le joueur, l'automatisme peut être désactivé dans les paramètres généraux du jeu.
 
 Pour les messages d'erreur ou les suggestions, veuillez visiter : https://github.com/Fetty42/FS25_AutoLightOnOff/issues ou https://forum.giants-software.com/viewtopic.php?t=208708]]></fr>
     </description>
 	<iconFilename>icon_AutoLightOnOff.dds</iconFilename>
 	<multiplayer supported="true" />
+
 	<extraSourceFiles>
+		<sourceFile filename="lib/UIHelper.lua" />
+		<sourceFile filename="AutoLightOnOffUISettings.lua" />
 		<sourceFile filename="AutoLightOnOff.lua" />
 	</extraSourceFiles>    
+
+	<l10n>
+		<text name="aloo_setting_title">
+			<de>Auto Light On/Off</de>	
+			<en>Auto Light On/Off</en>
+			<fr>Auto Light On/Off</fr>
+		</text>
+
+		<text name="aloo_isPlayerAutoLight_short">
+			<de>Automatisches Licht auch für den Spieler</de>	
+			<en>Automatic light also for the player</en>
+			<fr>Éclairage automatique également pour le joueur</fr>
+		</text>
+
+		<text name="aloo_isPlayerAutoLight_long">
+			<de>Aktiviert oder deaktiviert die automatische Beleuchtung auch für den Spieler.</de>	
+			<en>Activates or deactivates automatic lighting also for the player.</en>
+			<fr>Active ou désactive l'éclairage automatique également pour le lecteur.</fr>
+		</text>
+	</l10n>
 </modDesc>
