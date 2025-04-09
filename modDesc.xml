@@ -5,9 +5,9 @@
 		<en>Auto Light On/Off</en>
 	</title>
     <description>
-		<de><![CDATA[Schaltet automatisch das Licht das aktuellen Fahrzeugs oder des Spielers an oder aus, abhängig davon, ob Nacht oder Tag ist. Funktioniert sowohl beim Einsteigen als auch während der Fahrt.
+		<de><![CDATA[Schaltet automatisch das Licht des aktuellen Fahrzeuges oder des Spielers an oder aus, abhängig davon, ob Nacht oder Tag ist. Funktioniert sowohl beim Einsteigen als auch während der Fahrt.
 Wird die automatische Aktion manuell übersteuert, wird der Automatismus so lange deaktiviert, bis das Fahrzeug/Spieler gewechselt wird oder der Sonnenaufgang/Sonnenuntergang erreicht wird.
-Für den Spieler kann der Automatismuss in den generellen Spieleinstellungen deaktiviert werden.
+Für den Spieler kann der Automatismus in den generellen Spieleinstellungen deaktiviert werden.
 
 Für Fehlermeldungen oder Anregungen besucht bitte: https://github.com/Fetty42/FS25_AutoLightOnOff/issues oder https://forum.giants-software.com/viewtopic.php?t=208708]]></de>
 
