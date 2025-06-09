@@ -1,27 +1,48 @@
-<modDesc descVersion="96">
+<modDesc descVersion="99">
 	<author>Fetty42</author>
-	<version>1.0.0.0</version>
+	<version>1.1.0.0</version>
 	<title>
 		<en>Auto Light On/Off</en>
 	</title>
     <description>
-		<de><![CDATA[Schaltet automatisch das Licht des aktuellen Fahrzeuges oder des Spielers an oder aus, abhängig davon, ob Nacht oder Tag ist. Funktioniert sowohl beim Einsteigen als auch während der Fahrt.
-Wird die automatische Aktion manuell übersteuert, wird der Automatismus so lange deaktiviert, bis das Fahrzeug/Spieler gewechselt wird oder der Sonnenaufgang/Sonnenuntergang erreicht wird.
-Für den Spieler kann der Automatismus in den generellen Spieleinstellungen deaktiviert werden.
+		<de><![CDATA[AutoLight – Automatische Fahrzeug- und Spielerbeleuchtung
 
-Für Fehlermeldungen oder Anregungen besucht bitte: https://github.com/Fetty42/FS25_AutoLightOnOff/issues oder https://forum.giants-software.com/viewtopic.php?t=208708]]></de>
+Mit diesem Mod wird das Lichtmanagement zum Kinderspiel! AutoLight schaltet das Licht deines aktuellen Fahrzeugs oder deines Spielcharakters automatisch ein oder aus – je nachdem, ob Tag oder Nacht herrscht. Egal ob du gerade einsteigst oder bereits unterwegs bist: Der Mod sorgt jederzeit für die passende Beleuchtung.
 
-		<en><![CDATA[Automatically switches the light of the current vehicle or player on or off, depending on whether it is night or day. Works both when entering the vehicle and while driving.
-If the automatic action is manually overridden, the automatism is deactivated until the vehicle/player is changed or sunrise/sunset is reached.
-For the player, the automatism can be deactivated in the general game settings.
+Solltest du das Licht manuell bedienen, erkennt AutoLight dies und deaktiviert die Automatik vorübergehend. Der automatische Modus wird wieder aktiv, sobald du das Fahrzeug oder den Spieler wechselst – oder wenn der nächste Sonnenauf- bzw. -untergang eintritt.
 
-For error messages or suggestions please visit: https://github.com/Fetty42/FS25_AutoLightOnOff/issues or https://forum.giants-software.com/viewtopic.php?t=208708]]></en>
+Für deinen Spielcharakter lässt sich die Automatik bequem in den allgemeinen Spieleinstellungen deaktivieren.
 
-		<fr><![CDATA[Allume ou éteint automatiquement les lumières du véhicule actuel ou du joueur, selon qu'il fait nuit ou jour. Fonctionne aussi bien en montant dans le véhicule que pendant le trajet.
-Si l'action automatique est remplacée manuellement, l'automatisme est désactivé jusqu'à ce que le véhicule/joueur soit changé ou que le lever/coucher du soleil soit atteint.
-Pour le joueur, l'automatisme peut être désactivé dans les paramètres généraux du jeu.
+Changelog 1.1.0.0:
+- Die Lichtautomatik berücksichtigt nun zusätzlich den Motorzustand – das Licht wird nur noch aktiviert, wenn auch der Motor läuft.
 
-Pour les messages d'erreur ou les suggestions, veuillez visiter : https://github.com/Fetty42/FS25_AutoLightOnOff/issues ou https://forum.giants-software.com/viewtopic.php?t=208708]]></fr>
+Bei Fehlermeldungen oder Anregungen besuche bitte: https://github.com/Fetty42/FS25_AutoLightOnOff/issues oder https://forum.giants-software.com/viewtopic.php?t=208708]]></de>
+
+		<en><![CDATA[AutoLight – Automatic Vehicle and Player Lighting
+
+With this mod, light management becomes a breeze! AutoLight automatically turns your current vehicle’s or player character’s lights on or off – depending on whether it’s day or night. Whether you're just getting in or already on the move, the mod always ensures the appropriate lighting.
+
+If you operate the lights manually, AutoLight detects this and temporarily disables the automatic mode. The automatic mode is reactivated as soon as you switch vehicles or characters – or when the next sunrise or sunset occurs.
+
+For your player character, the automation can be easily disabled in the general game settings.
+
+Changelog 1.1.0.0:
+- The light automation now also takes the engine state into account – lights are only activated when the engine is running.
+
+For bug reports or suggestions, please visit: https://github.com/Fetty42/FS25_AutoLightOnOff/issues or https://forum.giants-software.com/viewtopic.php?t=208708]]></en>
+
+		<fr><![CDATA[AutoLight – Éclairage automatique des véhicules et des personnages
+
+Avec ce mod, la gestion de l’éclairage devient un jeu d’enfant ! AutoLight allume ou éteint automatiquement les phares de ton véhicule actuel ou de ton personnage, selon qu’il fait jour ou nuit. Que tu viennes de monter dans un véhicule ou que tu sois déjà en route : le mod assure un éclairage adapté en toutes circonstances.
+
+Si tu utilises l’éclairage manuellement, AutoLight le détecte et désactive temporairement le mode automatique. Le mode automatique se réactive dès que tu changes de véhicule ou de personnage – ou lors du prochain lever ou coucher de soleil.
+
+Pour ton personnage, l’automatisation peut être facilement désactivée dans les paramètres généraux du jeu.
+
+Journal des modifications 1.1.0.0 :
+- L’automatisation de l’éclairage prend désormais également en compte l’état du moteur – les phares ne s’allument que si le moteur est en marche.
+
+Pour tout message d’erreur ou suggestion, merci de visiter : https://github.com/Fetty42/FS25_AutoLightOnOff/issues ou https://forum.giants-software.com/viewtopic.php?t=208708]]></fr>
     </description>
 	<iconFilename>icon_AutoLightOnOff.dds</iconFilename>
 	<multiplayer supported="true" />

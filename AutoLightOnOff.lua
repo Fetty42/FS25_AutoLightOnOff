@@ -1,6 +1,4 @@
 -- Author: Fetty42
--- Date: 02.03.2025
--- Version: 1.0.0.0
 
 local dbPrintfOn = false
 local dbInfoPrintfOn = false
@@ -26,7 +24,7 @@ end
 local function dbPrintHeader(funcName)
 	if dbPrintfOn then
 		if g_currentMission ~=nil and g_currentMission.missionDynamicInfo ~=nil then
-			print(string.format("Call %s: isDedicatedServer=%s | isServer()=%s | isMasterUser=%s | isMultiplayer=%s | isClient()=%s | farmId=%s", 
+			print(string.format("Call %s: isDedicatedServer=%s | isServer()=%s | isMasterUser=%s | isMultiplayer=%s | isClient()=%s | farmId=%s",
 							funcName, tostring(g_dedicatedServer~=nil), tostring(g_currentMission:getIsServer()), tostring(g_currentMission.isMasterUser), tostring(g_currentMission.missionDynamicInfo.isMultiplayer), tostring(g_currentMission:getIsClient()), tostring(g_currentMission:getFarmId())))
 		else
 			print(string.format("Call %s: isDedicatedServer=%s | g_currentMission=%s",
@@ -45,7 +43,7 @@ AutoLightOnOff.updateDelta = 0    			-- time since the last update
 AutoLightOnOff.updateRate = 1000  			-- milliseconds until next update
 AutoLightOnOff.lastAutomaticAction = ""     -- Values: "on", "off", ""
 AutoLightOnOff.lastVehicleOrPlayer = nil
-AutoLightOnOff.init = false
+AutoLightOnOff.isInitSettingUI = false
 
 
 
@@ -110,10 +108,10 @@ function AutoLightOnOff:loadSettings()
 end
 
 function AutoLightOnOff:initSettingUI()
-	if not AutoLightOnOff.init then
-		local uiSettingsAutoLight = AutoLightOnOffUISettings.new(AutoLightOnOff.settings,true)
-		uiSettingsAutoLight:registerSettings()
-		AutoLightOnOff.init = true
+	if not AutoLightOnOff.isInitSettingUI then
+		local uiSettings = AutoLightOnOffUISettings.new(AutoLightOnOff.settings,true)
+		uiSettings:registerSettings()
+		AutoLightOnOff.isInitSettingUI = true
 	end
 end
 
@@ -132,18 +130,20 @@ function AutoLightOnOff:update(dt)
 
 			-- print("***AutoLightOnOff:update: Light Control***")
 			if curVehicle ~= nil and curVehicle.spec_lights ~= nil then
+			local isMotorStarted = curVehicle.getMotorState == nil or curVehicle:getMotorState() ~= MotorState.OFF 
+				-- print(string.format("  Vehicle: %s | motorState: %s | needLights: %s | isMotorStarted = %s" , curVehicle:getName(), tostring(curVehicle:getMotorState()), tostring(needLights), tostring(isMotorStarted)))
 
 				if curVehicle.getIsAIActive == nil or not curVehicle:getIsAIActive() then
 					local isLightActive = AutoLightOnOff:getIsLightTurnedOn(curVehicle)
                     AutoLightOnOff.lastAutomaticAction = AutoLightOnOff.lastVehicleOrPlayer == curVehicle and AutoLightOnOff.lastAutomaticAction or ""
 
-					if not isLightActive and needLights then 	-- and AutoLightOnOff.lastAutomaticAction ~= "on" then
+					if not isLightActive and needLights and isMotorStarted then 	-- and AutoLightOnOff.lastAutomaticAction ~= "on" then
 						-- turn light on
 						curVehicle:setNextLightsState(curVehicle.spec_lights.numLightTypes)
 						AutoLightOnOff.lastAutomaticAction = "on"
 					end
 
-					if isLightActive and not needLights and AutoLightOnOff.lastAutomaticAction ~= "off" then
+					if isLightActive and ((not needLights or not isMotorStarted) and AutoLightOnOff.lastAutomaticAction ~= "off")  then
                         -- turn light off
                         curVehicle:deactivateLights(true)
                         AutoLightOnOff.lastAutomaticAction = "off"
